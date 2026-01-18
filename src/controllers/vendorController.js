@@ -13,8 +13,8 @@ const register = async (req, res) => {
 const login = async (req, res) => {
     try {
         const { mobileNumber } = req.body;
-        const { vendor, token } = await vendorService.loginVendor(mobileNumber);
-        res.status(200).send({ message: 'Login successful', data: vendor, token });
+        const { token } = await vendorService.loginVendor(mobileNumber);
+        res.status(200).send({ message: 'Login successful', token });
     } catch (error) {
         if (error.message === 'Vendor not found') {
             res.status(404).send({ message: error.message });
