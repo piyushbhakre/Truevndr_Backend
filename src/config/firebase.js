@@ -1,14 +1,17 @@
-const admin = require('firebase-admin');
-const path = require('path');
-const serviceAccount = require('../../serviceAccountKey.json');
+const admin = require("firebase-admin");
+require("dotenv").config();
 
-try {
+if (!process.env.FIREBASE_SERVICE_ACCOUNT) {
+    throw new Error("FIREBASE_SERVICE_ACCOUNT is missing in .env");
+}
+
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
+
+if (!admin.apps.length) {
     admin.initializeApp({
-        credential: admin.credential.cert(serviceAccount)
+        credential: admin.credential.cert(serviceAccount),
     });
-    console.log('Firebase initialized successfully');
-} catch (error) {
-    console.error('Firebase initialization error:', error);
+    console.log("🔥 Firebase initialized successfully");
 }
 
 module.exports = admin;
